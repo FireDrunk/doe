@@ -1,4 +1,15 @@
 ---
+- name: "Check if binary is already installed"
+  ansible.builtin.stat:
+    path: "{{ doe_main_directory }}/{{ tool_friendly_name }}"
+  register: tool_exists
+
+- name: "Delete already existing binary"
+  ansible.builtin.file:
+    state: absent
+    path: "{{ doe_main_directory }}/{{ tool_friendly_name }}"
+  when: tool_exists.stat.exists
+
 - name: "Get latest version of: {{ tool_friendly_name }}"
   ansible.builtin.uri:
     url: "https://github.com/{{ tool_repo_name }}/releases/latest"
@@ -13,7 +24,7 @@
 
 - name: Tool Version
   ansible.builtin.debug:
-    msg: "Detected version: {{ tool_version }}"
+    msg: "Detected version: {{ tool_version }} for '{{ tool_friendly_name }}'"
 
 - name: Filter tool_download_name
   ansible.builtin.set_fact:
