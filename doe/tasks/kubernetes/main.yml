@@ -3,7 +3,7 @@
   ansible.builtin.include_tasks: "{{ item }}"
   with_items:
     - kind.yml
-    - kctx.yml
-    - kns.yml
+    - kubectx.yml
+    - kubens.yml
     - kubectl.yml
     - kubecm.yml

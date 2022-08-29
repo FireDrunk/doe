@@ -1,4 +1,10 @@
 ---
+- name: Enable COPR
+  become: true
+  shell:
+    cmd: "dnf copr enable -y atim/starship"
+  when: ansible_distribution == "CentOS"
+
 - name: Install Starship package
   become: true
   package:

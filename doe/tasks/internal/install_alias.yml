@@ -1,0 +1,6 @@
+---
+- name: Enable Alias
+  ansible.builtin.lineinfile:
+    path: "~/.bashrc"
+    regexp: "{{ alias_regexp }}"
+    line: "{{ alias_command }}"

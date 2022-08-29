@@ -22,6 +22,6 @@
 - name: "Import all Kubernetes Tasks"
   ansible.builtin.import_tasks: kubernetes/main.yml
 
-- name: "Import Starship Tasks"
-  ansible.builtin.import_tasks: shell/starship.yml
+- name: "Import Shell Tasks"
+  ansible.builtin.import_tasks: shell/main.yml
 

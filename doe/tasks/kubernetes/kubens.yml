@@ -1,0 +1,9 @@
+---
+
+- name: "Install kubens"
+  ansible.builtin.import_tasks: ../internal/github_release_download.yml
+  vars:
+    tool_friendly_name: kubens
+    tool_download_name: "kubens_||version||_linux_x86_64.tar.gz"
+    tool_repo_name: "ahmetb/kubectx"
+    tool_is_archive: true

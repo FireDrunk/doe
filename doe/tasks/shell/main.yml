@@ -1,0 +1,6 @@
+---
+- name: "Import aliasses Tasks"
+  ansible.builtin.import_tasks: aliasses.yml
+
+- name: "Import Starship Tasks"
+  ansible.builtin.import_tasks: starship.yml
