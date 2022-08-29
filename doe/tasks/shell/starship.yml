@@ -3,7 +3,7 @@
   become: true
   shell:
     cmd: "dnf copr enable -y atim/starship"
-  when: ansible_distribution == "CentOS"
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
 
 - name: Install Starship package
   become: true

@@ -9,7 +9,11 @@ galaxy_info:
   platforms:
     - name: CentOS
       versions:
-      - 8
+        - 8
+
+    - name: RedHat
+      versions:
+        - 8
 
     - name: Fedora
       versions:
