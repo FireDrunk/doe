@@ -1,0 +1,50 @@
+---
+- name: "Get latest version of: {{ tool_friendly_name }}"
+  ansible.builtin.uri:
+    url: "https://github.com/{{ tool_repo_name }}/releases/latest"
+    follow_redirects: no
+    return_content: yes
+    status_code: 302
+  register: tool_version_data
+
+- name: Register Version
+  ansible.builtin.set_fact:
+    tool_version: "{{ tool_version_data.location | regex_search('([^/]+$)') | trim }}"
+
+- name: Tool Version
+  ansible.builtin.debug:
+    msg: "Detected version: {{ tool_version }}"
+
+- name: Filter tool_download_name
+  ansible.builtin.set_fact:
+    filtered_tool_download_name: "{{ tool_download_name | replace('||version||', tool_version) }}"
+
+- name: Strip v from download version
+  ansible.builtin.set_fact:
+    stripped_tool_version: "{{ tool_version | replace('v','') }}"
+  when: tool_strip_v_from_download
+
+- name: Strip v from download url
+  ansible.builtin.set_fact:
+    filtered_tool_download_name: "{{ filtered_tool_download_name | replace(tool_version, stripped_tool_version) }}"
+  when: tool_strip_v_from_download
+
+- name: "Download {{ tool_friendly_name }} binary"
+  ansible.builtin.get_url:
+    url: "https://github.com/{{ tool_repo_name }}/releases/download/{{ tool_version }}/{{ filtered_tool_download_name }}"
+    dest: "{{ doe_main_directory }}/{{ tool_friendly_name }}"
+  when: not tool_is_archive
+
+- name: "Download {{ tool_friendly_name }} archive"
+  ansible.builtin.unarchive:
+    src: "https://github.com/{{ tool_repo_name }}/releases/download/{{ tool_version }}/{{ filtered_tool_download_name }}"
+    dest: "{{ doe_main_directory }}"
+    remote_src: yes
+    include:
+      - "{{ tool_friendly_name }}"
+  when: tool_is_archive
+
+- name: "Set {{ tool_friendly_name }} to executable"
+  ansible.builtin.file:
+    path: "{{ doe_main_directory }}/{{ tool_friendly_name }}"
+    mode: "u+x"

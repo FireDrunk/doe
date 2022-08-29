@@ -1,0 +1,8 @@
+---
+
+- name: "Install kns"
+  ansible.builtin.import_tasks: ../internal/github_release_download.yml
+  vars:
+    tool_friendly_name: kubens
+    tool_download_name: "kubens"
+    tool_repo_name: "ahmetb/kubectx"

@@ -1,0 +1,20 @@
+---
+- name: "Fetch Kubectl latest version"
+  ansible.builtin.uri:
+    url: "https://dl.k8s.io/release/stable.txt"
+    return_content: yes
+  register: stable_kubectl_version
+
+- name: "Debug kubectl version"
+  ansible.builtin.debug:
+    msg: "Detected stable kubectl version: {{ stable_kubectl_version.content }}"
+
+- name: "Download Kubectl"
+  ansible.builtin.get_url:
+    url: "https://dl.k8s.io/release/{{ stable_kubectl_version.content }}/bin/linux/amd64/kubectl"
+    dest: "{{ doe_main_directory }}/kubectl"
+
+- name: "Set executable"
+  ansible.builtin.file:
+    path: "{{ doe_main_directory }}/kubectl"
+    mode: "u+x"

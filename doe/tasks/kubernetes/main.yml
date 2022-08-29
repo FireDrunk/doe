@@ -1,0 +1,9 @@
+---
+- name: Import Kubernetes Tasks
+  ansible.builtin.include_tasks: "{{ item }}"
+  with_items:
+    - kind.yml
+    - kctx.yml
+    - kns.yml
+    - kubectl.yml
+    - kubecm.yml

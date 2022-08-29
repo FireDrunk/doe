@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Thijs Cramer
+  namespace: curioni
+  description: Prepares a DevOps Environment (DOE)
+  company: None
+  license: BSD-3-Clause
+  min_ansible_version: 2.1
+
+  platforms:
+   - name: Fedora
+     versions:
+     - all
+
+  galaxy_tags: []
+
+dependencies: []

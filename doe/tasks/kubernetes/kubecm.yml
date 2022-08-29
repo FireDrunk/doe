@@ -1,0 +1,11 @@
+---
+
+- name: "Install Kubecm"
+  ansible.builtin.import_tasks: ../internal/github_release_download.yml
+  vars:
+    tool_friendly_name: kubecm
+    tool_download_name: "kubecm_||version||_Linux_x86_64.tar.gz"
+    tool_repo_name: "sunny0826/kubecm"
+    tool_strip_v_from_download: true
+    tool_is_archive: true
+

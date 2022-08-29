@@ -1,0 +1,27 @@
+---
+- name: Create DOE Directory
+  ansible.builtin.file:
+    path: "{{ doe_main_directory }}"
+    state: directory
+
+- name: Create DOE Download Directory
+  ansible.builtin.file:
+    path: "{{ doe_main_directory }}/downloads"
+    state: directory
+
+- name: Register Download Directory
+  ansible.builtin.set_fact:
+    doe_download_directory: "{{ doe_main_directory }}/downloads"
+
+- name: Ensure DOE is in PATH
+  ansible.builtin.lineinfile:
+    path: "~/.bashrc"
+    line: "PATH=\"$HOME/.doe:$PATH\""
+    regexp: "^PATH=\"$HOME/.doe:$PATH\""
+
+- name: "Import all Kubernetes Tasks"
+  ansible.builtin.import_tasks: kubernetes/main.yml
+
+- name: "Import Starship Tasks"
+  ansible.builtin.import_tasks: shell/starship.yml
+

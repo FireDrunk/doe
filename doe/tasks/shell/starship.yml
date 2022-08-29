@@ -1,0 +1,39 @@
+---
+- name: Install Starship package
+  become: true
+  package:
+    name: starship
+    state: latest
+
+- name: Enable Starship in bashrc
+  ansible.builtin.lineinfile:
+    path: "~/.bashrc"
+    line: "eval \"$(starship init bash)\""
+    regexp: "eval \"$(starship init bash)\""
+
+- name: Create Config directory
+  ansible.builtin.file:
+    state: directory
+    path: "~/.config"
+
+- name: Check if Starship Config exists
+  ansible.builtin.stat:
+    path: "~/.config/starship.toml"
+  register: starship_config
+
+- name: Ensure Starship Config exists
+  ansible.builtin.file:
+    state: touch
+    path: "~/.config/starship.toml"
+  when: not starship_config.stat.exists
+
+- name: Ensure Starship Settings
+  ansible.builtin.blockinfile:
+    dest: "~/.config/starship.toml"
+    content: |
+      format = "$all"
+      
+      [kubernetes]
+      disabled = false
+      
+      format = '[$context \(](dimmed green)[$namespace](blue)[\)](dimmed green) '

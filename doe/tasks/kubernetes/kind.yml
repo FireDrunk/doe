@@ -1,0 +1,8 @@
+---
+
+- name: "Install KinD"
+  ansible.builtin.import_tasks: ../internal/github_release_download.yml
+  vars:
+    tool_friendly_name: kind
+    tool_download_name: kind-linux-amd64
+    tool_repo_name: "kubernetes-sigs/kind"
