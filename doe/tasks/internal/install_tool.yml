@@ -1,0 +1,6 @@
+---
+- name: Download From GitHub
+  ansible.builtin.import_tasks: github_release_download.yml
+
+- name: Create Alias for Tool
+  ansible.builtin.import_tasks: install_bashrc_line.yml

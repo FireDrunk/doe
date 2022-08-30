@@ -7,3 +7,5 @@
     tool_download_name: "kubectx_||version||_linux_x86_64.tar.gz"
     tool_repo_name: "ahmetb/kubectx"
     tool_is_archive: yes
+    line_regexp: "^alias kctx="
+    line_command: "alias kctx=kubectx"

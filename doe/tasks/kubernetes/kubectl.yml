@@ -18,3 +18,21 @@
   ansible.builtin.file:
     path: "{{ doe_main_directory }}/kubectl"
     mode: "u+x"
+
+- name: "Create Alias"
+  ansible.builtin.import_tasks: ../internal/install_bashrc_line.yml
+  vars:
+    line_regexp: "^alias k="
+    line_command: "alias k=kubectl"
+
+- name: Fix bash completion for alias k in .bashrc
+  ansible.builtin.include_tasks: ../internal/install_bashrc_line.yml
+  vars:
+    line_regexp: "^complete -F __start_kubectl k"
+    line_command: "complete -F __start_kubectl k"
+
+- name: Enable Bash Completion
+  ansible.builtin.include_tasks: ../internal/install_bashrc_line.yml
+  vars:
+    line_regexp: "^source <(kubectl completion bash)"
+    line_command: "source <(kubectl completion bash)"
