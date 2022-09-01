@@ -1,7 +1,7 @@
 ---
 
 - name: "Install kubectx"
-  ansible.builtin.import_tasks: ../internal/github_release_download.yml
+  ansible.builtin.import_tasks: ../internal/install_tool.yml
   vars:
     tool_friendly_name: kubectx
     tool_download_name: "kubectx_||version||_linux_x86_64.tar.gz"

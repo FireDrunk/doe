@@ -1,7 +1,7 @@
 ---
 
 - name: "Install KinD"
-  ansible.builtin.import_tasks: ../internal/github_release_download.yml
+  ansible.builtin.import_tasks: ../internal/install_tool.yml
   vars:
     tool_friendly_name: kind
     tool_download_name: kind-linux-amd64

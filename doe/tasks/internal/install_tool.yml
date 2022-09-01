@@ -4,3 +4,4 @@
 
 - name: Create Alias for Tool
   ansible.builtin.import_tasks: install_bashrc_line.yml
+  when: line_regexp is defined
