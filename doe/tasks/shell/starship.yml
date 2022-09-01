@@ -1,41 +1,45 @@
 ---
 - name: Enable COPR
   become: true
+  become_user: root
+
   shell:
     cmd: "dnf copr enable -y atim/starship"
   when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
 
 - name: Install Starship package
   become: true
+  become_user: root
+  
   package:
     name: starship
     state: latest
 
 - name: Enable Starship in bashrc
   ansible.builtin.lineinfile:
-    path: "~/.bashrc"
+    path: "~{{ user }}/.bashrc"
     line: "eval \"$(starship init bash)\""
     regexp: "eval \"$(starship init bash)\""
 
 - name: Create Config directory
   ansible.builtin.file:
     state: directory
-    path: "~/.config"
+    path: "~{{ user }}/.config"
 
 - name: Check if Starship Config exists
   ansible.builtin.stat:
-    path: "~/.config/starship.toml"
+    path: "~{{ user }}/.config/starship.toml"
   register: starship_config
 
 - name: Ensure Starship Config exists
   ansible.builtin.file:
     state: touch
-    path: "~/.config/starship.toml"
+    path: "~{{ user }}/.config/starship.toml"
   when: not starship_config.stat.exists
 
 - name: Ensure Starship Settings
   ansible.builtin.blockinfile:
-    dest: "~/.config/starship.toml"
+    dest: "~{{ user }}/.config/starship.toml"
     content: |
       format = "$all"
       

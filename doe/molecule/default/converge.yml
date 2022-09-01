@@ -1,12 +1,39 @@
 ---
-- name: Converge
+- name: Converge (as Root)
   hosts: all
   gather_facts: true
+
   tasks:
     - name: Install test prerequisites
       ansible.builtin.package:
         state: installed
         name: sudo
+
+    - name: Create Test User
+      ansible.builtin.user:
+        name: "test-user"
+        comment: "Test User"
+        create_home: yes
+
+    - name: Enable passwordless sudo for user test-user
+      community.general.sudoers:
+        name: test-user
+        user: test-user
+        nopassword: yes
+        commands: ALL
+
+- name: Converge (as User)
+  hosts: all
+  gather_facts: true
+
+  become: yes
+  become_user: test-user
+
+  tasks:
+    - name: Create .bashrc
+      ansible.builtin.file:
+        state: touch
+        path: "~test-user/.bashrc"
 
     - name: "Include curioni.doe"
       ansible.builtin.include_role:

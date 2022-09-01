@@ -4,7 +4,34 @@
 - name: Verify
   hosts: all
   gather_facts: false
+
+  become: yes
+  become_user: test-user
+  become_method: sudo
+
   tasks:
-  - name: Example assertion
-    ansible.builtin.assert:
-      that: true
+
+  - name: Validate Binaries
+    shell:
+      executable: /usr/bin/bash
+      cmd: "source ~/.bashrc && {{ item }}"
+    with_items:
+      - "kubectl version --output=yaml"
+      - "kind version"
+      - "kubectx --version"
+      - "kubens --version"
+      - "kubecm version"
+      - "starship --version"
+
+  - name: Validate Aliasses
+    ansible.builtin.lineinfile:
+      path: "~{{ user }}/.bashrc"
+      line: "{{ item }}"
+      state: present
+      check_mode: yes
+      register: presence
+      failed_when: presence is changed
+    with_items:
+      - "alias k=kubectl"
+      - "alias kctx=kubectx"
+      - "alias kubens=kns"

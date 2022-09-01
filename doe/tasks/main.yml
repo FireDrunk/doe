@@ -15,7 +15,7 @@
 
 - name: Ensure DOE is in PATH
   ansible.builtin.lineinfile:
-    path: "~/.bashrc"
+    path: "~{{ user }}/.bashrc"
     line: "PATH=\"$HOME/.doe:$PATH\""
     regexp: "^PATH=\"$HOME/.doe:$PATH\""
 
