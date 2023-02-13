@@ -1,0 +1,13 @@
+---
+- name: "Install Hashicorp Repository"
+  ansible.builtin.copy:
+    src: hashicorp.repo
+    dest: /etc/yum.repos.d/hasicorp.repo
+  become: true
+  become_user: root
+
+- name: "Install Terraform"
+  ansible.builtin.import_tasks: terraform.yml
+
+- name: "Install Vault"
+  ansible.builtin.import_tasks: vault.yml

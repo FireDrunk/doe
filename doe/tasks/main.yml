@@ -25,3 +25,9 @@
 - name: "Import Shell Tasks"
   ansible.builtin.import_tasks: shell/main.yml
 
+- name: "Install Azure CLI"
+  ansible.builtin.import_tasks: azure/main.yml
+
+- name: "Install Terraform"
+  ansible.builtin.import_tasks: hashicorp/main.yml
+

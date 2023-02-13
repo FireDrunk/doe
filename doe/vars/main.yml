@@ -3,3 +3,5 @@ user: "{{ ansible_env.USER | default('test-user') }}"
 doe_main_directory: "/home/{{ user }}/.doe"
 tool_strip_v_from_download: false
 tool_is_archive: false
+tool_archive_directory: ''
+tool_extra_opts: ''

@@ -1,0 +1,26 @@
+- name: Install Microsoft GPG Key
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://packages.microsoft.com/keys/microsoft.asc
+  become: true
+  become_user: root
+
+- name: Install Microsoft Repo
+  ansible.builtin.yum:
+    name: https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
+    state: present
+  become: true
+  become_user: root
+
+- name: Install Azure CLI
+  ansible.builtin.package:
+    name: azure-cli
+    state: present
+  become: true
+  become_user: root
+
+- name: "Enable Azure subscription alias (azs)"
+  ansible.builtin.include_tasks: ../internal/install_bashrc_line.yml
+  vars:
+    line_regexp: "^alias azs=az account set --subscription"
+    line_command: "alias azs=az account set --subscription"

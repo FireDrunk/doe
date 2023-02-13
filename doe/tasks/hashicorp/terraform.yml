@@ -1,0 +1,18 @@
+- name: Install Terraform
+  ansible.builtin.package:
+    name: terraform
+    state: present
+  become: true
+  become_user: root
+
+- name: "Enable Terraform bash completion"
+  ansible.builtin.include_tasks: ../internal/install_bashrc_line.yml
+  vars:
+    line_regexp: "^complete -C /usr/bin/terraform terraform"
+    line_command: "complete -C /usr/bin/terraform terraform"
+
+- name: "Enable Terraform workspace alias (tws)"
+  ansible.builtin.include_tasks: ../internal/install_bashrc_line.yml
+  vars:
+    line_regexp: "^alias tws=terraform workspace select"
+    line_command: "alias tws=terraform workspace select"

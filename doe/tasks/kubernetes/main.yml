@@ -7,3 +7,4 @@
     - kubens.yml
     - kubectl.yml
     - kubecm.yml
+    - kubelogin.yml
