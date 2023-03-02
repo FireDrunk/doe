@@ -7,13 +7,25 @@
     cmd: "dnf copr enable -y atim/starship"
   when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
 
-- name: Install Starship package
+- name: Install Starship rpm package
   become: true
   become_user: root
   
   package:
     name: starship
     state: latest
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+
+- name: Install Starship snap package
+  become: true
+  become_user: root
+
+  snap:
+    name: starship
+    channel: stable
+    classic: true
+    state: present
+  when: ansible_distribution == "Ubuntu"
 
 - name: Enable Starship in bashrc
   ansible.builtin.lineinfile:
