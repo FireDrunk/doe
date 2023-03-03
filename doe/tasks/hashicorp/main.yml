@@ -1,10 +1,24 @@
 ---
-- name: "Install Hashicorp Repository"
+- name: "Install Hashicorp Repository (RPM Based)"
   ansible.builtin.copy:
     src: hashicorp.repo
     dest: /etc/yum.repos.d/hasicorp.repo
   become: true
   become_user: root
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+
+- name: "Enable Hashicorp Repository Key (DEB Based)"
+  ansible.builtin.apt_key:
+    url: "https://apt.releases.hashicorp.com/gpg"
+    state: present
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+- name: "Enable HashiCorp Repository (DEB Based)"
+  ansible.builtin.apt_repository:
+    name: hashicorp
+    repo: "deb https://apt.releases.hashicorp.com {{ ansible_distribution_release | lower }}"
+    state: present
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
 
 - name: "Install Terraform"
   ansible.builtin.import_tasks: terraform.yml
