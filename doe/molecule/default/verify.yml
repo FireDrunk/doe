@@ -16,7 +16,7 @@
       executable: /usr/bin/bash
       cmd: "source ~/.bashrc && {{ item }}"
     with_items:
-      - "kubectl version --output=yaml"
+      - "kubectl version --output=yaml --client=true"
       - "kind version"
       - "kubectx --version"
       - "kubens --version"
@@ -25,12 +25,12 @@
 
   - name: Validate Aliasses
     ansible.builtin.lineinfile:
-      path: "~{{ user }}/.bashrc"
-      line: "{{ item }}"
+      path: "~test-user/.bashrc"
+      regexp: "{{ item }}"
       state: present
-      check_mode: yes
-      register: presence
-      failed_when: presence is changed
+    check_mode: yes
+    register: presence
+    failed_when: presence is changed
     with_items:
       - "alias k=kubectl"
       - "alias kctx=kubectx"

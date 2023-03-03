@@ -14,5 +14,5 @@
 - name: "Enable Terraform workspace alias (tws)"
   ansible.builtin.include_tasks: ../internal/install_bashrc_line.yml
   vars:
-    line_regexp: "^alias tws=terraform workspace select"
-    line_command: "alias tws=terraform workspace select"
+    line_regexp: "^alias tws=\"terraform workspace select\""
+    line_command: "alias tws=\"terraform workspace select\""
