@@ -5,7 +5,7 @@ This role installs various DevOps tools, gives them aliases in your bashrc and e
 
 Requirements
 ------------
-This role only works on RedHat based Operating Systems and only works with Bash.
+This role works best on RedHat based Operating Systems (but there is some alpha support for Ubuntu/Debian) and only works with Bash.
 This role requires Ansible (duh) and sudo permissions.
 
 Packages:
