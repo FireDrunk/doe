@@ -1,0 +1,11 @@
+---
+
+- name: "Install kubelogin"
+  ansible.builtin.import_tasks: ../internal/install_tool.yml
+  vars:
+    tool_friendly_name: kubelogin
+    tool_download_name: "kubelogin-linux-amd64.zip"
+    tool_repo_name: "Azure/kubelogin"
+    tool_is_archive: yes
+    tool_archive_directory: bin/linux_amd64/
+    tool_extra_opts: "-j"

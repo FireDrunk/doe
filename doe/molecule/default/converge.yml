@@ -7,7 +7,10 @@
     - name: Install test prerequisites
       ansible.builtin.package:
         state: installed
-        name: sudo
+        name: "{{ item }}"
+      with_items:
+      - sudo
+      - unzip
 
     - name: Create Test User
       ansible.builtin.user:

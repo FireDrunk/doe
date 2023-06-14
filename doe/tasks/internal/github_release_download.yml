@@ -52,7 +52,8 @@
     dest: "{{ doe_main_directory }}"
     remote_src: yes
     include:
-      - "{{ tool_friendly_name }}"
+      - "{{ tool_archive_directory }}{{ tool_friendly_name }}"
+    extra_opts: "{{ tool_extra_opts }}"
   when: tool_is_archive
 
 - name: "Set {{ tool_friendly_name }} to executable"
