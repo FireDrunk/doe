@@ -1,3 +1,9 @@
 ---
 - name: "Import Starship Tasks"
   ansible.builtin.import_tasks: starship.yml
+
+- name: "Import Keychain Tasks"
+  ansible.builtin.import_tasks: keychain.yml
+
+- name: "Import Fzf Tasks"
+  ansible.builtin.import_tasks: fzf.yml

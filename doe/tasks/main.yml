@@ -3,31 +3,47 @@
   ansible.builtin.file:
     path: "{{ doe_main_directory }}"
     state: directory
+  tags:
+    - always
 
 - name: Create DOE Download Directory
   ansible.builtin.file:
     path: "{{ doe_main_directory }}/downloads"
     state: directory
+  tags:
+    - always
 
 - name: Register Download Directory
   ansible.builtin.set_fact:
     doe_download_directory: "{{ doe_main_directory }}/downloads"
+  tags:
+    - always
 
 - name: Ensure DOE is in PATH
   ansible.builtin.lineinfile:
     path: "~{{ user }}/.bashrc"
     line: "PATH=\"$HOME/.doe:$PATH\""
     regexp: "^PATH=\"$HOME/.doe:$PATH\""
+  tags:
+    - always
 
 - name: "Import all Kubernetes Tasks"
   ansible.builtin.import_tasks: kubernetes/main.yml
+  tags:
+    - kubernetes
 
-- name: "Import Shell Tasks"
+- name: "Shell"
   ansible.builtin.import_tasks: shell/main.yml
+  tags:
+    - shell
 
-- name: "Install Azure CLI"
+- name: "Azure"
   ansible.builtin.import_tasks: azure/main.yml
+  tags:
+    - azure
 
-- name: "Install Terraform"
+- name: "Hashicorp"
   ansible.builtin.import_tasks: hashicorp/main.yml
+  tags:
+    - hashicorp
 

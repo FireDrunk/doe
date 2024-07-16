@@ -16,16 +16,17 @@
     state: latest
   when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
 
-- name: Install Starship snap package
-  become: true
-  become_user: root
+- name: Download Starship installer
+  ansible.builtin.get_url:
+    url: https://starship.rs/install.sh
+    dest: "{{ doe_main_directory }}/starship-install.sh"
+    mode: "0750"
+  when: ansible_facts['os_family'] == "Debian"
 
-  snap:
-    name: starship
-    channel: stable
-    classic: true
-    state: present
-  when: ansible_distribution == "Ubuntu"
+- name: Install Starship snap (web installer)
+  ansible.builtin.shell:
+    cmd: "sh {{ doe_main_directory }}/starship-install.sh -y"
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Enable Starship in bashrc
   ansible.builtin.lineinfile:
@@ -49,7 +50,7 @@
     path: "~{{ user }}/.config/starship.toml"
   when: not starship_config.stat.exists
 
-- name: Ensure Starship Settings
+- name: Ensure Starship Settings (unless exists)
   ansible.builtin.blockinfile:
     dest: "~{{ user }}/.config/starship.toml"
     content: |
@@ -59,3 +60,4 @@
       disabled = false
       
       format = '[$context \(](dimmed green)[$namespace](blue)[\)](dimmed green) '
+  when: not starship_config.stat.exists

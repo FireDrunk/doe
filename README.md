@@ -15,3 +15,10 @@ pip install ansible
 ```
 
 Run `setup.sh` **without sudo!** It will ask for your sudo password.
+
+
+# TODO:
+
+- Golang
+- fzf from unofficial repo (debian repo's are outdated)
+- 

@@ -2,6 +2,6 @@
 - name: "Install DOE"
   hosts: localhost
   tasks:
-    - name: "Include DOE Role"
-      include_role:
+    - name: "Import DOE Role"
+      import_role:
         name: doe

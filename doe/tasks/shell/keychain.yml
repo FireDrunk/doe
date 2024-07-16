@@ -1,0 +1,14 @@
+---
+- name: Install Keychain
+  become: true
+  become_user: root
+
+  package:
+    name: keychain
+    state: latest
+
+- name: "Enable keychain .bashrc"
+  ansible.builtin.include_tasks: ../internal/install_bashrc_line.yml
+  vars:
+    line_regexp: "^eval $(keychain --eval --agents ssh)"
+    line_command: "eval $(keychain --eval --agents ssh)"

@@ -4,4 +4,4 @@ if [[ EUID == 0 ]]; then
   exit 1
 fi
 
-ansible-playbook site.yml --ask-become-pass
+ansible-playbook site.yml --ask-become-pass $@
